@@ -27,6 +27,10 @@
  */
 
 #include "config.h"
+#include <dirent.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "core/meta-gesture-tracker-private.h"
 
@@ -280,14 +284,55 @@ meta_gesture_tracker_set_state (MetaGestureTracker *tracker,
   return TRUE;
 }
 
+static gboolean is_engage_running()
+{
+  DIR *proc = opendir("/proc");
+  if (!proc)
+    return FALSE;
+
+  struct dirent *entry;
+  char path[256];
+  char name[128];
+
+  while ((entry = readdir(proc)) != NULL) {
+    if (entry->d_type != DT_DIR)
+      continue;
+
+    int pid = atoi(entry->d_name);
+    if (pid <= 0)
+      continue;
+
+    snprintf(path, sizeof(path), "/proc/%d/comm", pid);
+    FILE *f = fopen(path, "r");
+    if (!f)
+      continue;
+
+    if (fgets(name, sizeof(name), f)) {
+      name[strcspn(name, "\n")] = 0;
+      if (strstr(name, "newline_engage")) {
+        fclose(f);
+        closedir(proc);
+        return TRUE;
+      }
+    }
+    fclose(f);
+  }
+
+  closedir(proc);
+  return FALSE;
+}
+
 static gboolean
 gesture_begin_cb (ClutterGestureAction *gesture,
                   ClutterActor         *actor,
                   MetaGestureTracker   *tracker)
 {
-  g_message("Blocked gesture in gesture_begin_cb()");
-  // Reject the gesture sequence right away
-  return FALSE;
+  if (is_engage_running()) {
+    g_message("\xf0\x9f\x94\x92 Gesture blocked because Engage is running");
+    return FALSE;
+  }
+
+  return TRUE;
 }
 
 static void

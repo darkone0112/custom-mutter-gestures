@@ -1,0 +1,78 @@
+Format: 1.8
+Date: Wed, 09 Apr 2025 14:13:33 +0800
+Source: mutter
+Binary: gir1.2-mutter-14 libmutter-14-0 libmutter-14-dev libmutter-test-14 mutter mutter-14-tests mutter-common mutter-common-bin
+Built-For-Profiles: noudeb
+Architecture: source amd64 all
+Version: 46.2-1ubuntu0.24.04.8
+Distribution: noble
+Urgency: medium
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Changed-By: Daniel van Vugt <daniel.van.vugt@canonical.com>
+Description:
+ gir1.2-mutter-14 - GObject introspection data for Mutter
+ libmutter-14-0 - window manager library from the Mutter window manager
+ libmutter-14-dev - Development files for the Mutter window manager
+ libmutter-test-14 - Test helper library for GNOME's window manager library
+ mutter     - Example window manager using GNOME's window manager library
+ mutter-14-tests - Tests for GNOME's window manager library
+ mutter-common - shared files for the Mutter window manager
+ mutter-common-bin - shared programs for the Mutter window manager
+Launchpad-Bugs-Fixed: 1904237 2063005
+Changes:
+ mutter (46.2-1ubuntu0.24.04.8) noble; urgency=medium
+ .
+   * Add clutter-Repick-actors-when-touches-emulate-button-clicks.patch
+     to resolve touchscreen problems on X11 (LP: #2063005, LP: #1904237)
+Checksums-Sha1:
+ bf22f2ff24ff99056f779ddbc687d2120db8e9db 3602 mutter_46.2-1ubuntu0.24.04.8.dsc
+ 54c56fb85df7520c52c8774e8856a37b10c4e26c 139408 mutter_46.2-1ubuntu0.24.04.8.debian.tar.xz
+ aad076de80233f261842fcdd0e20d777ced3997b 169086 gir1.2-mutter-14_46.2-1ubuntu0.24.04.8_amd64.deb
+ 080c53eca1bcc3d5b6baf82c527b739e77512cf7 6245888 libmutter-14-0-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 0183f3353eb25d83fed385904c38234e3e85b4da 1428674 libmutter-14-0_46.2-1ubuntu0.24.04.8_amd64.deb
+ e15e2d62d29426135fbbb1fc736771ec668c62da 476658 libmutter-14-dev_46.2-1ubuntu0.24.04.8_amd64.deb
+ bf5394d4c19a9a93acc8cd520e90ca4f5ab96862 162480 libmutter-test-14-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 758b93752b0e085344fda809df059f3423bbe764 80030 libmutter-test-14_46.2-1ubuntu0.24.04.8_amd64.deb
+ 5d1b90d03143fc65c2f7dd89be29036a67588423 1467182 mutter-14-tests-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 9610048ccd9dfd49b43848a69c4fb71f37335017 352668 mutter-14-tests_46.2-1ubuntu0.24.04.8_amd64.deb
+ 6d182519d77e41460e0a977750b52413228dc31a 41788 mutter-common-bin-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ c91fa75d5bf6b1a9d88b6a5d4b5ac7f5dc482da6 52840 mutter-common-bin_46.2-1ubuntu0.24.04.8_amd64.deb
+ 133bd1d4944d3012ffb220e2baf86f306e5dc75c 549764 mutter-common_46.2-1ubuntu0.24.04.8_all.deb
+ cc520be6a93029f5ae8fb043c78d4c52a52d3fc9 37270 mutter-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 9f82939034eb49d5a2cc8734557fbe4f9e3516f5 28302 mutter_46.2-1ubuntu0.24.04.8_amd64.buildinfo
+ 3123e34629c949103e69aac4668cd6d059faa3cd 152640 mutter_46.2-1ubuntu0.24.04.8_amd64.deb
+Checksums-Sha256:
+ 428df21728cfa977045195a2fb4763ae4975f444155a0c2182d48a438ded7c90 3602 mutter_46.2-1ubuntu0.24.04.8.dsc
+ c0bcdff6e4d63092785c7cb19bf52fe11422e4f1eb8fdc8bfad6bb5c1bf2d33f 139408 mutter_46.2-1ubuntu0.24.04.8.debian.tar.xz
+ 6ec52ba56b7b5edc315a7bde62e6c30e25b512d06ef2c8c5b9f93d0b53d9e7ff 169086 gir1.2-mutter-14_46.2-1ubuntu0.24.04.8_amd64.deb
+ 6e09c5b6078989c07e1431238d38d0389d643385a436b5d9c7b6f683a66ead0b 6245888 libmutter-14-0-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 30e91dd2512e7f6c60e3ca49bad130488a0f3bae8d5f16b62c046370eda2692d 1428674 libmutter-14-0_46.2-1ubuntu0.24.04.8_amd64.deb
+ e2167baa460bde00965dfb8acba8aebc2a6b26e498c8cf9ac2d100afd32aa9d6 476658 libmutter-14-dev_46.2-1ubuntu0.24.04.8_amd64.deb
+ 7013ef5ea3a7fbb9f3c1e37f8d181bf282193c9ffac232e0f403f204c0f4ba37 162480 libmutter-test-14-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 183fc49163bde545873d111f574d09b4cd10e9d4f231373c7baedd7d410ff0d4 80030 libmutter-test-14_46.2-1ubuntu0.24.04.8_amd64.deb
+ be4e97faca6139f46d66279947ec4393cf68bf79f373f1cf67ec8d4af3434297 1467182 mutter-14-tests-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ bf81040abed94109be3319d17e66b4497d43f204ad3ca4f3d52e921c7401a6a2 352668 mutter-14-tests_46.2-1ubuntu0.24.04.8_amd64.deb
+ 4117fc600a30dcffc65702ec0a2998c9616acb0e6472c1efdff559ec7bb0fb43 41788 mutter-common-bin-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ fa84c7021b2bfadf190704cd697691a2f3dc211a10096100b96ffc86ea539d20 52840 mutter-common-bin_46.2-1ubuntu0.24.04.8_amd64.deb
+ 3874f8bde8a347df8fa235bc1eb0bade1eef788a36b876db3c5d4236457d3a66 549764 mutter-common_46.2-1ubuntu0.24.04.8_all.deb
+ 7a7ed00f7cc39ca644ba5b0166cc2bf5bd8455c83c94d3d2e085303f5f791367 37270 mutter-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ a30d87e30461d61ecc084ea64a89888c45d81e2062eca34e608b959569c6cf4c 28302 mutter_46.2-1ubuntu0.24.04.8_amd64.buildinfo
+ cca6d3338c832742f89aee4653f1010862adb8521ab06e16753432e0b4bdfe8d 152640 mutter_46.2-1ubuntu0.24.04.8_amd64.deb
+Files:
+ 796d57fcab24986525d43d0333184f9a 3602 x11 optional mutter_46.2-1ubuntu0.24.04.8.dsc
+ a214c798012bb26717af23a818f09f85 139408 x11 optional mutter_46.2-1ubuntu0.24.04.8.debian.tar.xz
+ 587ed9822823731d5bd9956518b5110a 169086 introspection optional gir1.2-mutter-14_46.2-1ubuntu0.24.04.8_amd64.deb
+ 18a1b15bb13c5c67d1418c40175c450f 6245888 debug optional libmutter-14-0-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 065f3e82091ea0108d0abf1a07b4c600 1428674 libs optional libmutter-14-0_46.2-1ubuntu0.24.04.8_amd64.deb
+ b34f453a452bc70dc86c61305cd9c98e 476658 libdevel optional libmutter-14-dev_46.2-1ubuntu0.24.04.8_amd64.deb
+ 0d7828be966982dd8d5f0c5ca123c562 162480 debug optional libmutter-test-14-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 2c428e66fb51621856a8d5c411f9d6a2 80030 libs optional libmutter-test-14_46.2-1ubuntu0.24.04.8_amd64.deb
+ 0ec4cc9fe3cc31d6f08a69f52ae0a357 1467182 debug optional mutter-14-tests-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 61487ac269286b6db0a8becf81c67771 352668 x11 optional mutter-14-tests_46.2-1ubuntu0.24.04.8_amd64.deb
+ 45ff9ece70bc4c66da96c08ccb061e4e 41788 debug optional mutter-common-bin-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ 113ac95e00d49bd268c38c57e2731af1 52840 misc optional mutter-common-bin_46.2-1ubuntu0.24.04.8_amd64.deb
+ 43fdb02297e2d1176e0d36b6ac36f1cb 549764 misc optional mutter-common_46.2-1ubuntu0.24.04.8_all.deb
+ e2589f428337878a1af3cc5055473e58 37270 debug optional mutter-dbgsym_46.2-1ubuntu0.24.04.8_amd64.ddeb
+ b62a10657167323a785c8cbb0b663e4e 28302 x11 optional mutter_46.2-1ubuntu0.24.04.8_amd64.buildinfo
+ a897e3f4dade93b10fccdf6974e93d40 152640 x11 optional mutter_46.2-1ubuntu0.24.04.8_amd64.deb
+Original-Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
