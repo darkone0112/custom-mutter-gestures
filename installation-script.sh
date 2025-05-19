@@ -19,10 +19,21 @@ echo "[5/8] ✅ Extraction complete."
 
 # Step 6: Replace Mutter runtime library
 echo ""
-echo "[6/8] 📝 Replacing runtime Mutter library in /lib..."
-sudo cp /tmp/mutter-patch-extract/usr/lib/x86_64-linux-gnu/libmutter-14.so.0.0.0 /lib/x86_64-linux-gnu/
-sudo touch /lib/x86_64-linux-gnu/libmutter-14.so.0.0.0
+echo "[6/8] 📝 Preparing to replace runtime Mutter library in /lib..."
+
+LIB_PATH="/lib/x86_64-linux-gnu/libmutter-14.so.0.0.0"
+
+# Check if the file has the immutable flag set and remove it temporarily
+if lsattr "$LIB_PATH" | grep -q '\-i\-'; then
+  echo "[6/8] ⚠️ File is write-protected with chattr +i. Removing protection temporarily..."
+  sudo chattr -i "$LIB_PATH"
+fi
+
+# Overwrite the library with the new one
+sudo cp /tmp/mutter-patch-extract/usr/lib/x86_64-linux-gnu/libmutter-14.so.0.0.0 "$LIB_PATH"
+sudo touch "$LIB_PATH"
 echo "[6/8] ✅ Runtime library replaced."
+
 
 # Step 7: Protect against package updates
 echo ""
