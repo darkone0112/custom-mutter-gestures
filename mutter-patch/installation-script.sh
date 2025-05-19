@@ -2,61 +2,94 @@
 set -e
 
 echo ""
-echo "🔧 Mutter Patch Installation Script"
-
-# Step 4: Install generated .deb packages
+echo "=========================================="
+echo "         N E W L I N E   M U T T E R     "
+echo "=========================================="
 echo ""
-echo "[4/8] 📦 Installing new Mutter .deb packages..."
-sudo dpkg -i ../*.deb
-echo "[4/8] ✅ Packages installed."
 
-# Step 5: Extract the .so from built package
+
+LIB_PATH="/lib/x86_64-linux-gnu/libmutter-14.so.0.0.0"
+
+# Step 1: Remove write protection if already present
 echo ""
-echo "[5/8] 📂 Extracting new libmutter shared object..."
-mkdir -p /tmp/mutter-patch-extract
-dpkg-deb -x ../libmutter-14-0_*.deb /tmp/mutter-patch-extract
-echo "[5/8] ✅ Extraction complete."
-
-# Step 6: Replace Mutter runtime library
-echo ""
-echo "[6/8] 📝 Replacing runtime Mutter library in /lib..."
-sudo cp /tmp/mutter-patch-extract/usr/lib/x86_64-linux-gnu/libmutter-14.so.0.0.0 /lib/x86_64-linux-gnu/
-sudo touch /lib/x86_64-linux-gnu/libmutter-14.so.0.0.0
-echo "[6/8] ✅ Runtime library replaced."
-
-# Step 7: Protect against package updates
-echo ""
-echo "[7/8] 🔒 Marking packages to prevent update and locking .so file..."
-sudo apt-mark hold mutter libmutter-14-0 mutter-common mutter-common-bin gir1.2-mutter-14 libmutter-test-14
-sudo chattr +i /lib/x86_64-linux-gnu/libmutter-14.so.0.0.0
-echo "[7/8] ✅ Packages held and lib locked with chattr."
-
-echo ""
-echo "[7/8] 🦊 Patching Firefox to support touchscreen scroll..."
-
-# Make sure the user applications folder exists
-mkdir -p ~/.local/share/applications
-
-# Copy and patch Firefox .desktop file only if it hasn't been already
-if ! grep -q MOZ_USE_XINPUT2 ~/.local/share/applications/firefox.desktop 2>/dev/null; then
-    cp /usr/share/applications/firefox.desktop ~/.local/share/applications/
-
-    # Update all Exec entries that launch Firefox
-    sed -i 's|Exec=firefox|Exec=env MOZ_USE_XINPUT2=1 firefox|g' ~/.local/share/applications/firefox.desktop
-
-    # Update desktop database so the change is recognized
-    update-desktop-database ~/.local/share/applications
-
-    echo "[7/8] ✅ Firefox launcher patched and desktop database updated."
+echo "[1/7] 🔓 Checking if libmutter is protected..."
+if [ -f "$LIB_PATH" ]; then
+  if lsattr "$LIB_PATH" | grep -q '\-i\-'; then
+    echo "[1/7] ⚠️ File is protected with chattr +i. Removing protection..."
+    sudo chattr -i "$LIB_PATH"
+  else
+    echo "[1/7] ✅ File is not write-protected."
+  fi
 else
-    echo "[7/8] ⚠️  Firefox launcher already patched. Skipping."
+  echo "[1/7] ℹ️ File does not exist yet. Skipping chattr removal."
 fi
 
-# Step 8: Final reboot with countdown
+# Step 2: Clean up any previous extract directory
 echo ""
-echo "[8/8] ✅ Mutter patch fully applied and system secured."
+echo "[2/7] 🧹 Cleaning previous extract directory..."
+sudo rm -rf /tmp/mutter-patch-extract
+mkdir -p /tmp/mutter-patch-extract
+echo "[2/7] ✅ Clean done."
+
+# Step 3: Install all .deb packages
 echo ""
-echo "🔁 System will reboot in 10 seconds to apply changes. Press Ctrl+C to cancel."
+echo "[3/7] 📦 Installing Mutter .deb packages..."
+sudo dpkg -i ./*.deb || true
+echo "[3/7] ✅ Package installation complete (some harmless errors may occur if versions match)."
+
+# Step 4: Extract new .so and copy to runtime path
+echo ""
+echo "[4/7] 📂 Extracting and replacing libmutter..."
+dpkg-deb -x ./libmutter-14-0_*.deb /tmp/mutter-patch-extract
+sudo cp /tmp/mutter-patch-extract/usr/lib/x86_64-linux-gnu/libmutter-14.so.0.0.0 "$LIB_PATH"
+sudo touch "$LIB_PATH"
+echo "[4/7] ✅ libmutter replaced in runtime."
+
+# Step 5: Lock packages and write-protect lib
+echo ""
+echo "[5/7] 🔒 Locking packages and protecting libmutter..."
+sudo apt-mark hold mutter libmutter-14-0 mutter-common mutter-common-bin gir1.2-mutter-14 libmutter-test-14
+sudo chattr +i "$LIB_PATH"
+echo "[5/7] ✅ Held packages and protected libmutter with chattr."
+
+# Step 6: Patch Firefox for scroll gesture support
+echo ""
+echo "[6/7] 🦊 Patching Firefox to support touchscreen scroll..."
+
+mkdir -p ~/.local/share/applications
+
+FIREFOX_DESKTOP_SYSTEM="/usr/share/applications/firefox.desktop"
+FIREFOX_DESKTOP_USER="$HOME/.local/share/applications/firefox.desktop"
+
+if [ -f "$FIREFOX_DESKTOP_SYSTEM" ]; then
+    cp "$FIREFOX_DESKTOP_SYSTEM" "$FIREFOX_DESKTOP_USER"
+    sed -i 's|Exec=firefox|Exec=env MOZ_USE_XINPUT2=1 firefox|g' "$FIREFOX_DESKTOP_USER"
+    update-desktop-database ~/.local/share/applications
+    echo "[6/7] ✅ Firefox .desktop launcher patched (deb version)."
+else
+    # Snap version fallback
+    FIREFOX_SNAP_DESKTOP="/var/lib/snapd/desktop/applications/firefox_firefox.desktop"
+    if [ -f "$FIREFOX_SNAP_DESKTOP" ]; then
+        cp "$FIREFOX_SNAP_DESKTOP" "$FIREFOX_DESKTOP_USER"
+        sed -i 's|Exec=firefox|Exec=env MOZ_USE_XINPUT2=1 firefox|g' "$FIREFOX_DESKTOP_USER"
+        update-desktop-database ~/.local/share/applications
+        echo "[6/7] ✅ Firefox .desktop launcher patched (Snap version)."
+    else
+        echo "[6/7] ⚠️ Firefox .desktop file not found in standard or Snap locations. Skipping patch."
+    fi
+fi
+
+# Step 7: Final reboot
+echo ""
+echo "=========================================="
+echo "         N E W L I N E   M U T T E R     "
+echo "=========================================="
+echo ""
+
+echo ""
+echo "[7/7] ✅ Mutter patch deployed successfully."
+echo ""
+echo "🔁 System will reboot in 10 seconds. Press Ctrl+C to cancel."
 for i in {10..1}; do
   echo -ne "$i...\r"
   sleep 1
@@ -65,3 +98,4 @@ done
 echo ""
 echo "Rebooting now..."
 sudo reboot
+

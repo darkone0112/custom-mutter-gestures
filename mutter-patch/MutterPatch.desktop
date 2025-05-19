@@ -1,9 +1,10 @@
 [Desktop Entry]
-Name=Install Mutter Patch
-Comment=Installs custom Mutter and enables touchscreen fixes
-Exec=gnome-terminal -- bash -c "installation-script.sh; echo ''; echo 'Done. Close this window.'; read -n1"
+Name=Install Newline Mutter Patch
+Comment=Installs custom Mutter with touchscreen fixes
+Exec=gnome-terminal -- bash -c '~/mutter-patch/install.sh; echo; echo Press any key to close...; read -n1'
 Icon=utilities-terminal
 Terminal=false
 Type=Application
 Categories=Utility;
 StartupNotify=true
+

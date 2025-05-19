@@ -25,7 +25,6 @@ echo "[3/8] 🏗️  Building Mutter packages with dpkg-buildpackage..."
 dpkg-buildpackage -us -uc -j$(nproc)
 echo "[3/8] ✅ Build complete."
 
-cd ..
 # Step 4: Install generated .deb packages
 echo ""
 echo "[4/8] 📦 Installing new Mutter .deb packages..."
@@ -87,3 +86,4 @@ done
 echo ""
 echo "Rebooting now..."
 sudo reboot
+
