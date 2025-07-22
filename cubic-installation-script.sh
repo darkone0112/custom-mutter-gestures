@@ -29,7 +29,7 @@ mkdir -p /tmp/mutter-patch-extract
 echo ""
 echo "[3/5] 📦 Installing Mutter .deb packages..."
 dpkg -i ./*.deb || true
-apt install -f -y
+#apt install -f -y
 
 echo ""
 echo "[4/5] 📂 Forcing .so copy to runtime location..."
